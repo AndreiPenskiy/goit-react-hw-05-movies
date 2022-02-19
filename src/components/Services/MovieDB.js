@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export async function FetchTrendingMovies() {
     const response = await axios.get('https://api.themoviedb.org/3/trending/movie/day?api_key=9cd0dda93c2009fed108da3042f91609');
-    return response.data;
+    return response.data.results;
 };
 
 export async function SearchMovie(query) {
@@ -10,7 +10,7 @@ export async function SearchMovie(query) {
     return search.data;
 };
 
-export async function MovieDetails(id) {
+export const MovieDetails = async id => {
     const detail = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=9cd0dda93c2009fed108da3042f91609&language=en-US`);
     return detail.data;
 };
@@ -21,6 +21,6 @@ export async function MovieCredits(id) {
 };
 
 export async function MovieReview(id) {
-    const review = await axios.get(`https://api.themoviedb.org/3/movie/${id}/reviews?api_key=9cd0dda93c2009fed108da3042f91609&language=en-US&page=1`);
-    return review.data;
+    const review = await axios.get(`https://api.themoviedb.org/3/movie/${id}/reviews?api_key=9cd0dda93c2009fed108da3042f91609`);
+    return review.data.results;
 };
