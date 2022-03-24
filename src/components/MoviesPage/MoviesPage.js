@@ -15,7 +15,7 @@ export const MoviesPage = () => {
 
     return (
         <>
-            <Searchbar onSubmit={}/>
+            <Searchbar/>
         </>
     )
 }
