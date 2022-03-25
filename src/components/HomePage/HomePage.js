@@ -1,42 +1,36 @@
 import { useEffect, useState } from 'react';
 import { FetchTrendingMovies } from '../Services/MovieDB';
 import { ToastContainer, toast } from 'react-toastify';
-import { Link } from '../Navigation/Navigation.styled'
+import { Link } from '../Navigation/Navigation.styled';
 
+export default function HomePage() {
+  const [list, setList] = useState([]);
 
-export const HomePage = () => {
+  useEffect(() => {
+    async function fetchPictures() {
+      try {
+        const response = await FetchTrendingMovies();
+        setList(response);
+      } catch (error) {
+        toast.error('Все пропало!', { position: 'top-center' });
+      }
+    }
+    fetchPictures();
+  }, []);
 
-    const [list, setList] = useState([]);
-
-    useEffect(() => {
-
-            async function fetchPictures() {
-            try {
-                const response = await FetchTrendingMovies();
-                setList(response);
-            } catch (error) {
-                toast.error('Все пропало!', { position: "top-center", });
-            }
-        };
-        fetchPictures();
-    }, []);
-    
-
-
-
-    return (
+  return (
     <>
-        <main>
-            <h1>Trending today</h1>
-            <ul>
-                    {list.map(item => (<li key={item.id}>
-                        <Link to={`/movies/${item.id}`}>
-                            {item.title}
-                            </Link>
-                    </li>))}
-            </ul>
-            </main>
-            <ToastContainer autoClose={2000} />
-            </>
-    )
+      <main>
+        <h1>Trending today</h1>
+        <ul>
+          {list.map(item => (
+            <li key={item.id}>
+              <Link to={`/movies/${item.id}`}>{item.title}</Link>
+            </li>
+          ))}
+        </ul>
+      </main>
+      <ToastContainer autoClose={2000} />
+    </>
+  );
 }

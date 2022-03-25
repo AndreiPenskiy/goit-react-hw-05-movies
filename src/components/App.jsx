@@ -1,24 +1,21 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import { Navigation } from './Navigation/Navigation'
-import { HomePage } from "./HomePage/HomePage";
-import { MovieDetailsPage } from './MovieDetailsPage/MovieDetailsPage';
 import { Cast } from './Cast/Cast';
 import { Reviews } from './Reviews/Reviews';
-import { MoviesPage } from './MoviesPage/MoviesPage';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-
-
-
+const HomePage = lazy(() => import('./HomePage/HomePage.js'));
+const MoviesPage = lazy(() => import('./MoviesPage/MoviesPage.js'));
+const MovieDetailsPage = lazy(() => import('./MovieDetailsPage/MovieDetailsPage.js'));
 
 
 export const App = () => {
   return (
     <>
+      <Suspense fallback={''}>
       <Navigation />
       <Routes>
-        {/* <Route path="/" element={<Navigation />} /> */}
         <Route path="home" element={<HomePage />} />
         <Route path="movies" element={<MoviesPage />} />
 
@@ -30,7 +27,8 @@ export const App = () => {
         
           <Route path="*" element={<Navigate to="/home" />} />
         
-        </Routes>
+      </Routes>
+      </Suspense>
     </>
   );
 };
